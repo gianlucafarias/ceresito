@@ -3,6 +3,8 @@ import { createBot, createProvider, createFlow, addKeyword, utils } from '@build
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
 import { provider } from './provider'
+import { adapterDB } from './database'
+
 const PORT = process.env.PORT ?? 3008
 
 const discordFlow = addKeyword<Provider, Database>('doc').addAnswer(
@@ -60,13 +62,6 @@ const fullSamplesFlow = addKeyword<Provider, Database>(['samples', utils.setEven
 
 const main = async () => {
     const adapterFlow = createFlow([welcomeFlow, registerFlow, fullSamplesFlow])
-    const adapterDB = new Database({
-       host: process.env.POSTGRES_DB_HOST,
-       user: process.env.POSTGRES_DB_USER,
-       database: process.env.POSTGRES_DB_NAME,
-       password: process.env.POSTGRES_DB_PASSWORD,
-       port: +process.env.POSTGRES_DB_PORT
-   })
 
     const { handleCtx, httpServer } = await createBot({
         flow: adapterFlow,
