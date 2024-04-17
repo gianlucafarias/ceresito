@@ -3,7 +3,7 @@ import { createBot, createProvider, createFlow, addKeyword, utils } from '@build
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
 import { provider } from './provider'
-import { adapterDB } from './database'
+import { database } from './database'
 
 const PORT = process.env.PORT ?? 3008
 
@@ -66,7 +66,7 @@ const main = async () => {
     const { handleCtx, httpServer } = await createBot({
         flow: adapterFlow,
         provider,
-        database: adapterDB,
+        database,
     })
 
     provider.server.post(
