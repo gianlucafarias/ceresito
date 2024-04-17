@@ -3,7 +3,8 @@ import { createBot, createProvider, createFlow, addKeyword, utils } from '@build
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
 import { provider } from './provider'
-import { database } from './database'
+
+import { MemoryDB } from '@builderbot/bot'
 
 const PORT = process.env.PORT ?? 3008
 
@@ -62,11 +63,13 @@ const fullSamplesFlow = addKeyword<Provider, Database>(['samples', utils.setEven
 
 const main = async () => {
     const adapterFlow = createFlow([welcomeFlow, registerFlow, fullSamplesFlow])
+    const adapterDB = new MemoryDB()
+
 
     const { handleCtx, httpServer } = await createBot({
         flow: adapterFlow,
         provider,
-        database,
+        database: adapterDB,
     })
 
     provider.server.post(
