@@ -1,6 +1,7 @@
 dist/*
 node_modules
 .env
+credenciales.json
 
 *_sessions
 *tokens
