@@ -1,0 +1,28 @@
+import { createFlow } from '@builderbot/bot';
+import { flowPrincipal } from './flowPrincipal';
+import  flowMenu  from './flowMenu';
+import { flowLlamarMenu } from './flowLlamarMenu';
+import { flowAyuda } from './flowAyuda';
+import flowLicencias from './flowLicencias';
+import  flowTramites  from './flowTramites';
+import { flowCIC } from './flowCic';
+import { flowAdultosmayores } from './flowAdultosmayores';
+import { flowCeresito } from './flowCeresito';
+import { flowDengue } from './flowDengue';
+import  flowEducacion from './flowEducacion';
+import { flowHistoria } from './flowHistoria';
+import { flowResiduos } from './flowResiduos';
+import { flowTurismo } from './flowTurismo';
+import { flowActividadesAdultos } from './flowActividadesAdultos';
+import { flowAgente } from './flowAgente';
+import { flowConsejoAdultos } from './flowConsejoAdultos';
+import { flowMujerSegura } from './flowMujerSegura';
+import { flowNumeroGuardialocal } from './flowNumeroGuardialocal';
+import { flowSeccionesPatio } from './flowSeccionesPatio';
+import { flowInactividad } from 'src/utils/idle';
+import { flowGenero } from './flowGenero';
+import { flowPrimeraVez } from './flowPrimeraVez';
+import { flowConsultar } from './reclamo/flowConsultar';
+import { flowCrearReclamo } from './crearReclamo';
+import {voiceNoteFlow, mediaFlow} from './flowAudios';
+export const flow =  createFlow([flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])
