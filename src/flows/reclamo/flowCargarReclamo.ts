@@ -112,6 +112,14 @@ STATUS[telefono] = {...STATUS[telefono], barrio : ctx.body}})
     STATUS[telefono] = {...STATUS[telefono], detalle : ctx.body}
 //Variable del STATUS
 try {
+    database.contadorFlujos(12) // educacion
+    .then(() => {
+        console.log('Contador del flujo incrementado correctamente');
+    })
+    .catch((error) => {
+        console.error('Error al incrementar el contador del flujo:', error);
+    });
+    
     await database.ingresarDatos({
         fecha: new Date(), // Ejemplo de fecha actual
         nombre: STATUS[telefono].nombre,

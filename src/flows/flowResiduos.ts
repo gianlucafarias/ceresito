@@ -8,23 +8,40 @@ import { flowSeccionesPatio } from './flowSeccionesPatio';
 import { flowLlamarMenu } from './flowLlamarMenu';
 import  flowMenu from './flowMenu';
 import { flowAyuda } from './flowAyuda';
+import { PostgreSQLAdapter } from '~/database/postgresql-adapter'
 
+interface Credentials {
+    host: string;
+    user: string;
+    database: string;
+    password: string | null;
+    port: number;
+  }
+
+// Objeto para almacenar los tiempos de inicio de la conversación por usuario
+const credentials: Credentials = {
+    host: process.env.POSTGRES_DB_HOST || 'localhost',
+    user: process.env.POSTGRES_DB_USER || '',
+    database: process.env.POSTGRES_DB_NAME || '',
+    password: process.env.POSTGRES_DB_PASSWORD || '',
+    port: +process.env.POSTGRES_DB_PORT || 5432,
+  };
+const database = new PostgreSQLAdapter(credentials)
 let errores = 0;
 
 export const flowResiduos = addKeyword<Provider, Database>(['006','separacion', 'residuos', 'separación residuos', 'separación'])
 .addAnswer('Separar los residuos es fundamental para el cuidado de nuestro planeta. Selecciona qué info necesitas saber 🌎', {delay: 1000}, async (ctx, {gotoFlow}) => {
-   /*
-    const adapterDB = require('../database/database')
+   
 
-    adapterDB.contadorFlujos(6) //residuos
+    database.contadorFlujos(7) //residuos
         .then(() => {
             console.log('Contador del flujo incrementado correctamente');
         })
         .catch((error) => {
             console.error('Error al incrementar el contador del flujo:', error);
         });
-        */
-    startInactividad(ctx, gotoFlow, 120000)
+        
+    startInactividad(ctx, gotoFlow, 160000)
   })
 .addAnswer(['¿Sobre qué queres saber? 👇',
 '1. 👉 Separación y recolección residuos domiciliarios ♻️',

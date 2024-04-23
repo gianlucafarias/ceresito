@@ -1,17 +1,31 @@
 import { addKeyword } from '@builderbot/bot'
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
-
-import { startInactividad, resetInactividad, stopInactividad,
-} from '../utils/idle'
 import { flowLlamarMenu } from './flowLlamarMenu'
-  
+import { PostgreSQLAdapter } from '~/database/postgresql-adapter'
+
+interface Credentials {
+    host: string;
+    user: string;
+    database: string;
+    password: string | null;
+    port: number;
+  }
+
+// Objeto para almacenar los tiempos de inicio de la conversación por usuario
+const credentials: Credentials = {
+    host: process.env.POSTGRES_DB_HOST || 'localhost',
+    user: process.env.POSTGRES_DB_USER || '',
+    database: process.env.POSTGRES_DB_NAME || '',
+    password: process.env.POSTGRES_DB_PASSWORD || '',
+    port: +process.env.POSTGRES_DB_PORT || 5432,
+  };
+const database = new PostgreSQLAdapter(credentials)
 
 export const flowHistoria = addKeyword<Provider, Database>('historia')
-/*
+
         .addAction(async (ctx, { gotoFlow }) => {
-          const adapterDB = require('../database/database')
-          adapterDB.contadorFlujos(5) // historia
+          database.contadorFlujos(6) // historia
           .then(() => {
               console.log('Contador del flujo incrementado correctamente');
           })
@@ -19,7 +33,7 @@ export const flowHistoria = addKeyword<Provider, Database>('historia')
               console.error('Error al incrementar el contador del flujo:', error);
           });
         }) 
-        */
+        
         .addAnswer('Acá te dejamos un pequeño resumen sobre la historia de nuestra querida ciudad 👇', {delay:2000}, async (ctx, { provider } ) => {
           const sock = await provider.getInstance();
           const msgPoll = {
@@ -39,6 +53,6 @@ export const flowHistoria = addKeyword<Provider, Database>('historia')
                     'Luego de 73 años de existencia y con 9.588 habitantes, sin haber llegado a las 10.000 requeridos, el gobernador Carlos S. Begnis declaró oficialmente ciudad a Ceres en el año 1961. Se trataron de más de 70 años caracterizados por una gran expansión cultural, social y económica: florecieron instituciones y la actividad económica creció a grandes ritmos, principalmente por el sector agropecuario. Ese mismo año, nuestra ciudad contabilizaba 120 tambos, 221 establecimientos agrícolas y 425 negocios.',
                     'Este año, la ciudad cumplió 131 años y según los últimos datos, estamos cerca de los 20.000 habitantes. Ceres se constituye como el centro comercial y de servicios más importante de la zona, teniendo un radio de influencia muy importante en toda el área.',
     ], {delay: 4000})
-    .addAction({ delay: 9000 }, async (ctx, { flowDynamic, gotoFlow }) => {
+    .addAction({ delay: 12000 }, async (ctx, { flowDynamic, gotoFlow }) => {
       return gotoFlow(flowLlamarMenu)
   })

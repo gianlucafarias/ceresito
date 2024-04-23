@@ -23,7 +23,7 @@ const flowEducacion = addKeyword<Provider, Database>(['007','Educación 📚', '
         console.error('Error al incrementar el contador del flujo:', error);
     });
     */
-    startInactividad(ctx, gotoFlow, 80000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+    startInactividad(ctx, gotoFlow, 160000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
 })   
 .addAnswer('¿Querés estudiar? ¡Te felicitamos! En Ceres podes capacitarte en dos carreras universitarias y también en robótica 🤓')
 .addAnswer(['¿Sobre qué queres saber? 👇',

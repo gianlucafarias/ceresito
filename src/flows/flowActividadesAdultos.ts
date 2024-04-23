@@ -27,7 +27,7 @@ import { flowAyuda } from './flowAyuda';
 export const flowActividadesAdultos = addKeyword<Provider, Database>('actividades adultos mayores')   
         .addAnswer('Si querés sumarte a las actividades para adultos mayores, contame cual te interesa y te mando información 👇',
         {delay: 1000}, async (ctx, { provider, gotoFlow } ) => {
-        startInactividad(ctx, gotoFlow, 80000); 
+        startInactividad(ctx, gotoFlow, 160000); 
 
             })
         .addAnswer(['1. 👉 Ajedrez ♟️',

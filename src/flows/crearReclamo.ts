@@ -10,7 +10,7 @@ import flowMenu from './flowMenu';
 let errores = 0;
 export const flowCrearReclamo = addKeyword<Provider, Database>(['005','console'])
 .addAction(async (ctx, { gotoFlow }) => {
-    startInactividad(ctx, gotoFlow, 300000)
+    startInactividad(ctx, gotoFlow, 1600000)
   })
   .addAnswer('¡Perfecto! Voy a ayudarte a cargar tu reclamo ⚠️. Para eso voy a pedirte los siguientes datos:\n\n1. Tipo de Reclamo (Higiene urbana, Árboles, Arreglos) Recordá que solo podes elegir uno de esas opciones disponibles. \n2. Dónde se encuentra ubicado el problema (Nombre de Calle y Número)\n3. Barrio donde se encuentra el problema.\n4. Una breve descripción del problema para que podamos entender mejor la situación.\n\nUna vez que me envias estos datos ya podré guardar tu solicitud. \n\n¿Estás listo?',
   {
@@ -24,7 +24,7 @@ export const flowCrearReclamo = addKeyword<Provider, Database>(['005','console']
     console.log(option)
     if (!["hacer reclamo", "volver al menú"].includes(option)) {
         errores++;
-        resetInactividad(ctx, gotoFlow, 90000)
+        resetInactividad(ctx, gotoFlow, 1600000)
         if (errores > 2 )
         {
             stopInactividad(ctx)

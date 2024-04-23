@@ -29,6 +29,11 @@ const main = async () => {
         flow,
         provider,
         database: adapterDB,
+    }, {
+        queue: {
+            timeout: 20000, //👌
+            concurrencyLimit: 60 //👌
+        }
     })
 
     provider.server.post(

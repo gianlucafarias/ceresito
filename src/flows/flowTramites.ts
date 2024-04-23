@@ -37,7 +37,7 @@ const flowTramites = addKeyword<Provider, Database>(['001','Trámites', 'tramite
                 console.error('Error al incrementar el contador del flujo:', error);
             });
              
-            startInactividad(ctx, gotoFlow, 80000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+            startInactividad(ctx, gotoFlow, 160000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
         }) 
        
     .addAnswer('Hacer trámites puede ser muy aburrido y estresante, por eso quiero facilitarte las cosas 💪' )

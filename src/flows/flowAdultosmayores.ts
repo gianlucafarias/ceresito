@@ -24,7 +24,7 @@ export const flowAdultosmayores = addKeyword<Provider, Database>(['008','activid
                 console.error('Error al incrementar el contador del flujo:', error);
             });
             */
-            startInactividad(ctx, gotoFlow, 80000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+            startInactividad(ctx, gotoFlow, 160000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
         }) 
         .addAnswer('Desde el Gobierno de la Ciudad de Ceres impulsamos un montón de actividades para los adultos mayores 🤩',{delay: 1000})
         .addAnswer(['¿Sobre qué queres saber? 👇',

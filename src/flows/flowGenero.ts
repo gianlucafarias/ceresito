@@ -20,14 +20,14 @@ export const flowGenero = addKeyword<Provider, Database>(['Genero', 'género'])
 
         '\n\n Escribí el número del menú sobre el tema que te interese para continuar.',
         ], {delay: 4000}, async (ctx, {gotoFlow}) => {
-            startInactividad(ctx, gotoFlow, 120000)
+            startInactividad(ctx, gotoFlow, 160000)
           })
         .addAction({ capture: true }, async (ctx, { flowDynamic, gotoFlow, provider }) => {
             const opcion = ctx.body.toLowerCase().trim();
 
             
             if (!["1", "2", "3", "4", "menu", "menú"].includes(opcion)) {
-                resetInactividad(ctx, gotoFlow, 90000)
+                resetInactividad(ctx, gotoFlow, 160000)
                 await flowDynamic("⚠️ Opción no encontrada, por favor seleccione una opción válida.");
                 return gotoFlow(flowGenero);
             }

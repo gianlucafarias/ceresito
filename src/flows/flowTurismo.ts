@@ -7,22 +7,40 @@ import { startInactividad, resetInactividad, stopInactividad,
 import { flowAyuda } from './flowAyuda';
 import { flowLlamarMenu } from './flowLlamarMenu';
 import  flowMenu from './flowMenu';
+import { PostgreSQLAdapter } from '~/database/postgresql-adapter'
+
+interface Credentials {
+    host: string;
+    user: string;
+    database: string;
+    password: string | null;
+    port: number;
+  }
+
+// Objeto para almacenar los tiempos de inicio de la conversación por usuario
+const credentials: Credentials = {
+    host: process.env.POSTGRES_DB_HOST || 'localhost',
+    user: process.env.POSTGRES_DB_USER || '',
+    database: process.env.POSTGRES_DB_NAME || '',
+    password: process.env.POSTGRES_DB_PASSWORD || '',
+    port: +process.env.POSTGRES_DB_PORT || 5432,
+  };
+const database = new PostgreSQLAdapter(credentials)
 
 let errores = 0;
 
 export const flowTurismo = addKeyword<Provider, Database>(['004','Turismo', 'hoteles', 'bares'])
 .addAction(async (ctx, { gotoFlow }) => {
-    /*
-    const adapterDB = require('../database/database')
-    adapterDB.contadorFlujos(4) //turismo
+    
+    database.contadorFlujos(5) //turismo
         .then(() => {
             console.log('Contador del flujo incrementado correctamente');
         })
         .catch((error) => {
             console.error('Error al incrementar el contador del flujo:', error);
         });
-        */
-    startInactividad(ctx, gotoFlow, 80000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+        
+    startInactividad(ctx, gotoFlow, 160000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
   })  
 .addAnswer('¡Nuestra ciudad tiene un montón de cosas para disfrutar! 🤩')
 .addAnswer(['¿Sobre qué queres saber? 👇',
@@ -38,7 +56,7 @@ export const flowTurismo = addKeyword<Provider, Database>(['004','Turismo', 'hot
     const opcion = ctx.body.toLowerCase().trim();
     if (!["1", "2", "3", "4", "5", "menu", "menú"].includes(opcion)) {
         errores++;
-        resetInactividad(ctx, gotoFlow, 90000)
+        resetInactividad(ctx, gotoFlow, 160000)
         if (errores > 2 )
         {
             stopInactividad(ctx)
