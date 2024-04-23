@@ -1,27 +1,42 @@
 import { addKeyword } from '@builderbot/bot'
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
-
 import { startInactividad, resetInactividad, stopInactividad,
 } from '../utils/idle'
 import  flowMenu from './flowMenu';
 import { flowAyuda } from './flowAyuda';
+import { PostgreSQLAdapter } from '~/database/postgresql-adapter'
 
-  let errores = 0;
+interface Credentials {
+    host: string;
+    user: string;
+    database: string;
+    password: string | null;
+    port: number;
+  }
+
+// Objeto para almacenar los tiempos de inicio de la conversación por usuario
+const credentials: Credentials = {
+    host: process.env.POSTGRES_DB_HOST || 'localhost',
+    user: process.env.POSTGRES_DB_USER || '',
+    database: process.env.POSTGRES_DB_NAME || '',
+    password: process.env.POSTGRES_DB_PASSWORD || '',
+    port: +process.env.POSTGRES_DB_PORT || 5432,
+  };
+const database = new PostgreSQLAdapter(credentials)
+let errores = 0;
 
 const flowTramites = addKeyword<Provider, Database>(['001','Trámites', 'tramite', 'trámite', 'trámites', 'quiero hacer un tramite', 'Trámites 🗃️'])
-        
 .addAction(async (ctx, { gotoFlow }) => {
-            /*
-            const adapterDB = require('../database/database')
-            adapterDB.contadorFlujos(1) // tramites
+
+            database.contadorFlujos(1) // tramites
             .then(() => {
                 console.log('Contador del flujo incrementado correctamente');
             })
             .catch((error) => {
                 console.error('Error al incrementar el contador del flujo:', error);
             });
-             */
+             
             startInactividad(ctx, gotoFlow, 80000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
         }) 
        

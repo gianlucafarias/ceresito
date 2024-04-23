@@ -1,13 +1,5 @@
-import { PostgreSQLAdapter as Database} from '@builderbot/database-postgres';
-interface Credentials {
-    host: string;
-    user: string;
-    database: string;
-    password: string | null;
-    port: number;
-  }
-  
-export type IDatabase = typeof Database
+import { PostgreSQLAdapter as Database } from './postgresql-adapter';
+
 export const database = new Database({
     host: process.env.POSTGRES_DB_HOST,
     user: process.env.POSTGRES_DB_USER,

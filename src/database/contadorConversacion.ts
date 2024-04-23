@@ -1,7 +1,26 @@
-import { adapterDB } from '.';
+import { MemoryDB } from '@builderbot/bot'
+import { PostgreSQLAdapter } from './postgresql-adapter';
+
+interface Credentials {
+    host: string;
+    user: string;
+    database: string;
+    password: string | null;
+    port: number;
+  }
+
+
+
 // Objeto para almacenar los tiempos de inicio de la conversación por usuario
 const conversationStartTimes = {};
-
+const credentials: Credentials = {
+    host: process.env.POSTGRES_DB_HOST || 'localhost',
+    user: process.env.POSTGRES_DB_USER || '',
+    database: process.env.POSTGRES_DB_NAME || '',
+    password: process.env.POSTGRES_DB_PASSWORD || '',
+    port: +process.env.POSTGRES_DB_PORT || 5432,
+  };
+const database = new PostgreSQLAdapter(credentials)
 // Función para iniciar el contador de conversación
 export function iniciarContadorConversacion(ctx) {
     conversationStartTimes[ctx.from] = Date.now(); // Guarda el tiempo de inicio de la conversación
@@ -22,7 +41,7 @@ export async function detenerContadorConversacion(ctx) {
         console.log(`La conversación con el usuario ${ctx.from} duró ${duracionFormateada} minutos.`);
         delete conversationStartTimes[ctx.from];
         try {
-            await adapterDB.ingresarDatosConversacion(nombre, telefono, duracionFormateada);
+            await database.ingresarDatosConversacion(nombre, telefono, duracionFormateada);
         } catch (error) {
             console.error('Error al insertar los datos de la conversación en la base de datos:', error);
         }

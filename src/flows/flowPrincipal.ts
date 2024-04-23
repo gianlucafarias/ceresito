@@ -5,17 +5,25 @@ import  flowMenu  from './flowMenu'
 import { join } from 'path'
 import { iniciarContadorConversacion } from '../database/contadorConversacion'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
-import { database } from '~/database'
 
 export const flowPrincipal = addKeyword<Provider>(["hola","buenas tardes", "buenos dias", EVENTS.ACTION])
 .addAction(
     { delay: 3000 },
     async (ctx, { provider, flowDynamic, gotoFlow }) => {
-
+        
       const name = ctx.name;
-      await flowDynamic(`🙌 ¡Hola ${name}! Soy Ceresito, y volví 😎`);
+      const telefono = ctx.from;
+      await flowDynamic(`🙌 ¡Hola ${name}! Soy Ceresito y volví 😎`);
       await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras 🦸‍♀️',{delay: 3000} )
-      return gotoFlow(flowMenu);
+      const existeContacto = await consultarContactos(name, telefono);
+                    
+      if (existeContacto) {
+          // Si el contacto existe, ir al flujoMenu
+          return gotoFlow(flowMenu);
+      } else {
+          // Si el contacto no existe, ir al flujo de bienvenida
+          return gotoFlow(flowPrimeraVez);
+      }
     }
     
 )

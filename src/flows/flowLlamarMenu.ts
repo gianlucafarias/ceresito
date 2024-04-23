@@ -19,20 +19,20 @@ export const flowLlamarMenu = addKeyword<Provider, Database>(['$menu'])
 {delay: 6000, buttons:
 [
     { body: 'No, Gracias' },
-    { body: 'Volver al menú principal' }
+    { body: 'Volver al menú' }
 ]
 })
-
-  .addAction({ capture: true }, async (ctx, { flowDynamic, gotoFlow, fallBack }) => {
+  .addAction({ capture: true }, async (ctx, { endFlow, flowDynamic, gotoFlow, fallBack }) => {
     const opcion = ctx.body.toLowerCase().trim();
-    if (!["tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "volver al menú principal"].includes(opcion)) {
+    console.log(opcion)
+    const nombre = ctx.name;
+    if (!["tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "volver al menú", "Volver al menú"].includes(opcion)) {
         errores++;
         resetInactividad(ctx, gotoFlow, 90000)
             if (errores > 2 )
             {
                 stopInactividad(ctx)
                 return gotoFlow(flowAyuda);
-
             }
         await flowDynamic('No te entiendo 😢 Necesitas ayuda? Escribí la palabra *Menú* para volver a empezar')
     }
@@ -81,13 +81,17 @@ export const flowLlamarMenu = addKeyword<Provider, Database>(['$menu'])
         stopInactividad(ctx)
         return gotoFlow(flowMenu)
     }
-    case 'volver al menú principal': {
+    case 'volver al menú': {
+        stopInactividad(ctx)
+        return gotoFlow(flowMenu)
+    }
+    case 'Volver al menú': {
         stopInactividad(ctx)
         return gotoFlow(flowMenu)
     }
     case 'no, gracias': {
         stopInactividad(ctx)
-        return gotoFlow(flowMenu)
+        return endFlow(`De nada ${nombre} 😃. Si necesitas información estoy disponible 24/7.`)
     }
     default: await flowDynamic('No te entiendo 😢 Necesitas ayuda? Escribí la palabra *Menú* para volver a empezar')
     }

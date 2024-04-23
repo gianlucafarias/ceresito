@@ -25,4 +25,7 @@ import { flowPrimeraVez } from './flowPrimeraVez';
 import { flowConsultar } from './reclamo/flowConsultar';
 import { flowCrearReclamo } from './crearReclamo';
 import {voiceNoteFlow, mediaFlow} from './flowAudios';
-export const flow =  createFlow([flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])
+import { flowReclamos } from './reclamo/flowReclamos';
+import { flowCargarReclamo } from './reclamo/flowCargarReclamo';
+
+export const flow =  createFlow([flowCargarReclamo, flowReclamos, flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])

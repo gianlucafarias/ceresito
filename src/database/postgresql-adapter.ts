@@ -1,4 +1,6 @@
-import { Pool, PoolClient, QueryResult } from 'pg';
+import pg from 'pg';
+import {PoolClient as PoolClientType} from 'pg';
+const { Pool, PoolClient, QueryResult } = pg;
 
 interface Credentials {
   host: string;
@@ -28,7 +30,7 @@ const credentials: Credentials = {
   };
 
 export class PostgreSQLAdapter {
-  private db: PoolClient | undefined;
+  private db: PoolClientType | undefined;
   private listHistory: Context[] = [];
   private credentials: Credentials = credentials
 
