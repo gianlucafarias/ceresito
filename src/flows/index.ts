@@ -27,5 +27,10 @@ import { flowCrearReclamo } from './crearReclamo';
 import {voiceNoteFlow, mediaFlow} from './flowAudios';
 import { flowReclamos } from './reclamo/flowReclamos';
 import { flowCargarReclamo } from './reclamo/flowCargarReclamo';
+import { flowCertificado } from './flowCertificado';
+import { flowSalud } from './flowSalud';
+import { flowCPC } from './flowCPC';
+import { flowCaps } from './flowCaps';
+import { flowCongresoMujeres } from './flowCongresoMujeres';
 
-export const flow =  createFlow([flowCargarReclamo, flowReclamos, flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])
+export const flow =  createFlow([flowCongresoMujeres, flowSalud, flowCaps, flowCPC, flowCertificado, flowCargarReclamo, flowReclamos, flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])

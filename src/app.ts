@@ -2,28 +2,23 @@ import { createBot } from '@builderbot/bot'
 import { provider } from './provider'
 import { flow } from './flows'
 import { MemoryDB } from '@builderbot/bot'
-import { PostgreSQLAdapter } from './database/postgresql-adapter'
-import { getUsuariosDesdeSheets, enviarMensajesAUsuarios } from './utils/enviarMensajeVuelta'
+import polka from 'polka';
+import {startServer} from './services/api/server'
 
+const body = {
+    "messaging_product": "whatsapp",
+    "type": "template",
+    "template": {
+        "name": 'ceresito_is_back',
+        "language": {
+            "code": 'es_AR',
+        },
+    }
+};
 
 const PORT = process.env.PORT ?? 3000
-interface Credentials {
-    host: string;
-    user: string;
-    database: string;
-    password: string | null;
-    port: number;
-  }
-
 const main = async () => {
-    const credentials: Credentials = {
-        host: process.env.POSTGRES_DB_HOST || 'localhost',
-        user: process.env.POSTGRES_DB_USER || '',
-        database: process.env.POSTGRES_DB_NAME || '',
-        password: process.env.POSTGRES_DB_PASSWORD || '',
-        port: +process.env.POSTGRES_DB_PORT || 5432,
-      };
-    const database = new PostgreSQLAdapter(credentials)
+
     const adapterDB = new MemoryDB()
     const { handleCtx, httpServer } = await createBot({
         flow,
@@ -41,6 +36,15 @@ const main = async () => {
         handleCtx(async (bot, req, res) => {
             const { number, message, urlMedia } = req.body
             await bot.sendMessage(number, message, { media: urlMedia ?? null })
+            return res.end('sended')
+        })
+    )
+
+    provider.server.post(
+        '/v1/template',
+        handleCtx(async (bot, req, res) => {
+            const { number, template, languageCode } = req.body
+            await bot.provider.sendTemplate(number, template, languageCode)
             return res.end('sended')
         })
     )
@@ -80,10 +84,5 @@ const main = async () => {
     })
 
     httpServer(+PORT)
-    {/*
-    const usuarios = await getUsuariosDesdeSheets();
-    await enviarMensajesAUsuarios(usuarios);
-    */}
 }
-
 main()

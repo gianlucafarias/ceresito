@@ -1,0 +1,14 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "39660037",
+    "database": "ceresitodb_ts",
+    "entities": ["src/services/api/entities/**/*.ts"],
+    "migrations": ["src/services/api/migrations/**/*.ts"],
+    "cli": {
+      "entitiesDir": "src/services/api/entities",
+      "migrationsDir": "src/services/api/migrations"
+    }
+  }

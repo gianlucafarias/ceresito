@@ -1,36 +1,30 @@
 import { addKeyword } from '@builderbot/bot'
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
-
-
-import { startInactividad, resetInactividad, stopInactividad,
-} from '../utils/idle'
+import { resetInactividad, stopInactividad } from '~/utils/idle';
 import { flowAyuda } from './flowAyuda';
 import { flowCIC } from './flowCic';
-import  flowTramites  from './flowTramites';
 import { flowGenero } from './flowGenero';
 import flowLicencias from './flowLicencias';
-import  flowMenu from './flowMenu';
-import { detenerContadorConversacion } from '~/utils/contadorConversacion';
-
+import flowMenu from './flowMenu';
+import flowTramites from './flowTramites';
+import { flowCPC } from './flowCPC';
+import { flowCaps } from './flowCaps';
 let errores = 0;
 
-export const flowLlamarMenu = addKeyword<Provider, Database>(['$menu'])
-.addAction(async(ctx) => {
-    detenerContadorConversacion(ctx);
-})
-.addAnswer('Querés hacer otra consulta? También podes escribir *Trámites*, *CIC*, *Género* o *Licencias* para otras opciones.',
-{delay: 6000, buttons:
-[
-    { body: 'No, Gracias' },
-    { body: 'Volver al menú' }
-]
-})
-  .addAction({ capture: true }, async (ctx, { endFlow, flowDynamic, gotoFlow, fallBack }) => {
+export const flowSalud = addKeyword<Provider, Database>('salud')
+.addAnswer('¡Trabajamos para descentralizar la salud y llevarla a distintos puntos de la ciudad! 🧑‍⚕️\n\nBrindamos servicios de salud en tres espacios, elegí sobre el que querés saber:',
+{delay: 2000, buttons: [
+    {body: 'CIC'},
+    {body: 'CPC'},
+    {body: 'CAPS'}
+]})
+
+.addAction({ capture: true }, async (ctx, { endFlow, flowDynamic, gotoFlow, fallBack }) => {
     const opcion = ctx.body.toLowerCase().trim();
     console.log(opcion)
     const nombre = ctx.name;
-    if (!["tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "Volver al menu", "volver al menú"].includes(opcion)) {
+    if (!["tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "Volver al menu", "Volver al menú", "1", "2", "3", "caps", "cpc"].includes(opcion)) {
         errores++;
         resetInactividad(ctx, gotoFlow, 90000)
             if (errores > 2 )
@@ -100,6 +94,14 @@ export const flowLlamarMenu = addKeyword<Provider, Database>(['$menu'])
         case 'no, gracias': {
         stopInactividad(ctx)
         return endFlow(`De nada ${nombre} 😃. Si necesitas información estoy disponible 24/7.`)
+    }
+    case 'cpc': {
+        stopInactividad(ctx)
+        return gotoFlow(flowCPC)
+    }
+    case 'caps': {
+        stopInactividad(ctx)
+        return gotoFlow(flowCaps)
     }
     default: await flowDynamic('No te entiendo 😢 Necesitas ayuda? Escribí la palabra *Menú* para volver a empezar')
     }

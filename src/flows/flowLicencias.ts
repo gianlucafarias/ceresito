@@ -62,7 +62,7 @@ const flowLicencias = addKeyword<Provider, Database>(['002','Licencias', 'licenc
                 { body: 'Volver 🔄' }
             ]
     })
-        .addAction({ capture: true }, async (ctx, { provider, flowDynamic, gotoFlow }) => {
+        .addAction({ capture: true }, async (ctx, { endFlow, flowDynamic, gotoFlow }) => {
             const opcion = ctx.body.trim();
             console.log(opcion)
             if (!["Requisitos","Sacar turno", "Volver 🔄", "menú", "menu"].includes(opcion)) {
@@ -81,13 +81,12 @@ const flowLicencias = addKeyword<Provider, Database>(['002','Licencias', 'licenc
             switch (opcion) {
             case 'Requisitos': {
                 stopInactividad(ctx)
-                await flowDynamic('Toda la info sobre licencias, como tipo de licencias, requisitos, renovación, pérdida y más, lo encontras acá 👇 https://ceres.gob.ar/turnos/ \n\n Escribí *Licencias* para volver al menú anterior o *Menú* para volver al menú principal.');
-                break;
+                return endFlow('Toda la info sobre licencias, como tipo de licencias, requisitos, renovación, pérdida y más, lo encontras acá 👇 https://ceres.gob.ar/turnos/ \n\n Escribí *Licencias* para volver al menú anterior o *Menú* para volver al menú principal.');
+
             }
             case 'Sacar turno': {
                 stopInactividad(ctx)
-                await flowDynamic('Ahora podes sacar tu turno desde acá 👇 https://ceres.gob.ar/turnos/ \n\n Escribí *Licencias* para volver al menú anterior o *Menú* para volver al menú principal.');
-                break;
+                return endFlow('Ahora podes sacar tu turno desde acá 👇 https://ceres.gob.ar/turnos/ \n\n Escribí *Licencias* para volver al menú anterior o *Menú* para volver al menú principal.');
             }
             case 'Volver 🔄': {
                 stopInactividad(ctx)

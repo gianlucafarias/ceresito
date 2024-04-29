@@ -28,7 +28,7 @@ const credentials: Credentials = {
 const database = new PostgreSQLAdapter(credentials)
 let errores = 0;
 
-export const flowCIC = addKeyword<Provider, Database>(['003','CIC', 'centro integrador comunitario', 'salud', 'telefono cic', 'CIC 🫂'])
+export const flowCIC = addKeyword<Provider, Database>(['CIC', 'centro integrador comunitario', 'salud', 'telefono cic', 'CIC 🫂'])
 
         .addAction(async (ctx, { gotoFlow }) => {
             
@@ -48,7 +48,7 @@ export const flowCIC = addKeyword<Provider, Database>(['003','CIC', 'centro inte
                 address: 'CIC',
                 lat_number: '-29.880399',
                 long_number: '-61.949467',
-                name: 'Centro integrado Comunitario'
+                name: 'Centro integrador Comunitario'
             })
         })
 
@@ -60,11 +60,11 @@ export const flowCIC = addKeyword<Provider, Database>(['003','CIC', 'centro inte
 
         '\n\n Elegí alguna de esas opciones y te ayudo.',
 
-        ],{delay: 3000})
+        ],{delay: 5000})
 
 
         
-        .addAction({ capture: true }, async (ctx, { flowDynamic, gotoFlow }) => {
+        .addAction({ capture: true }, async (ctx, {endFlow, flowDynamic, gotoFlow }) => {
             const opcion = ctx.body.toLowerCase().trim();
             if (!["1", "2", "3", "4", "menu", "menú", "x"].includes(opcion)) {
                 errores++;
@@ -81,13 +81,11 @@ export const flowCIC = addKeyword<Provider, Database>(['003','CIC', 'centro inte
             switch (opcion) {
             case '1': {
                 stopInactividad(ctx)
-                    await flowDynamic('En el CIC ofrecemos los siguientes servicios de salud 🩺\n\n Odontología \n Ginecología \n Médica clínica \n Obstetricia \n Pediatría \n Servicio de enfermería\n\n Escribí *CIC* para volver al menú anterior o *Menú* para volver al menú principal.');
-                    break;
+                    return endFlow('En el CIC ofrecemos los siguientes servicios de salud 🩺\n\n Odontología \n Ginecología \n Médica clínica \n Obstetricia \n Pediatría \n Servicio de enfermería\n\n Escribí *CIC* para volver al menú anterior o *Menú* para volver al menú principal.');
                 }
                 case '2': {
                     stopInactividad(ctx)
-                    await flowDynamic('Si necesitas ayuda con trámites, en el CIC te orientamos en: \n\n Retención del 20% de AUH \n Tarifa social \n Tarifa de servicio \n Becas Progresar \n Adultos 2000, plan para finalizar la secundaria \n Asesoramiento e inicio de trámites previsionales\n\n Para más info, acercate a Avenida Perón y Pje. Melián 📍\n\n Escribí *CIC* para volver al menú anterior o *Menú* para volver al menú principal.');
-                    break;
+                    return endFlow('Si necesitas ayuda con trámites, en el CIC te orientamos en: \n\n Retención del 20% de AUH \n Tarifa social \n Tarifa de servicio \n Becas Progresar \n Adultos 2000, plan para finalizar la secundaria \n Asesoramiento e inicio de trámites previsionales\n\n Para más info, acercate a Avenida Perón y Pje. Melián 📍\n\n Escribí *CIC* para volver al menú anterior o *Menú* para volver al menú principal.');
                 }
                 case '3': {
                     stopInactividad(ctx)

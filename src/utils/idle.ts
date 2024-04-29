@@ -2,10 +2,12 @@
 import { addKeyword, EVENTS } from '@builderbot/bot'
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
+import { detenerContadorConversacion } from './contadorConversacion';
 
 export const flowInactividad = addKeyword<Provider, Database>(EVENTS.ACTION).addAction(
   async (ctx, { endFlow }) => {
     stopInactividad(ctx);
+    detenerContadorConversacion(ctx);
     return endFlow("¡Se agotó el tiempo de respuesta! Si querés seguir hablando conmigo, mandame *Hola* 👋");
   }
 );

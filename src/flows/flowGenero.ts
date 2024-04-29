@@ -22,7 +22,7 @@ export const flowGenero = addKeyword<Provider, Database>(['Genero', 'género'])
         ], {delay: 4000}, async (ctx, {gotoFlow}) => {
             startInactividad(ctx, gotoFlow, 160000)
           })
-        .addAction({ capture: true }, async (ctx, { flowDynamic, gotoFlow, provider }) => {
+        .addAction({ capture: true }, async (ctx, {endFlow, flowDynamic, gotoFlow, provider }) => {
             const opcion = ctx.body.toLowerCase().trim();
 
             
@@ -34,9 +34,7 @@ export const flowGenero = addKeyword<Provider, Database>(['Genero', 'género'])
             switch (opcion) {
             case '1': {
                 stopInactividad(ctx)
-                await flowDynamic('Desde el área de género y diversidad, brindamos ayuda y asesoramiento a personas que sufren algún tipo de violencia por su género y/o condición 💜\n\nTenemos como fin la creación y puesta en acción de políticas públicas orientadas a promover, prevenir y erradicar cualquier tipo y todas las vulneraciones de derechos en infancias, adolescencias, familias, mujeres y diversidades sexuales \n Si queres conocer más sobre esta área o si necesitas ayuda, podes acercarte al CIC (Avenida Perón y Pje. Melián) o contactate al 3491560492 / 03491422353 🤳.');
-                return gotoFlow(flowLlamarMenu);
-
+                return endFlow('Desde el área de género y diversidad, brindamos ayuda y asesoramiento a personas que sufren algún tipo de violencia por su género y/o condición 💜\n\nTenemos como fin la creación y puesta en acción de políticas públicas orientadas a promover, prevenir y erradicar cualquier tipo y todas las vulneraciones de derechos en infancias, adolescencias, familias, mujeres y diversidades sexuales \n Si queres conocer más sobre esta área o si necesitas ayuda, podes acercarte al CIC (Avenida Perón y Pje. Melián) o contactate al 3491560492 / 03491422353 🤳.');
             }   
                 case '2': {
                 stopInactividad(ctx)

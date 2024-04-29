@@ -65,7 +65,9 @@ insertarNombresFlujos = async () => {
         'AdultosMayores',
         'Dengue',
         'Ceresito',
-        'Reclamo'
+        'Reclamo',
+        'Genero',
+        'Congreso'
     ];
 
     const insertQuery = 'INSERT INTO visitas_flujo (nombre_flujo) VALUES ($1)';

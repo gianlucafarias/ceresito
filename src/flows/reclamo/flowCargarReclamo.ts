@@ -51,8 +51,9 @@ export const flowCargarReclamo = addKeyword<Provider, Database>(['Quiero hacer u
 .addAnswer(['Contame, ¿Que tipo de Reclamo es?\n',
 '1. 👉 Higiene urbana 🗑',
 '2. 👉 Árboles 🌳',
-'3. 👉 Arreglos 🚧',
-
+'3. 👉  Arreglos de obras públicas 🚧',
+'4. 👉 Luminarias 💡',
+'5. 👉 Animales en la vía pública 🐴',
 '\n\n Escribí el número de la categoría a la que corresponde tu reclamo.',
 ],
 {capture:true},
@@ -60,7 +61,7 @@ async (ctx,{flowDynamic, gotoFlow}) =>{
 const telefono = ctx.from
 const option = ctx.body.toLowerCase().trim();
 
-if (!["1", "2", "3"].includes(option)) {
+if (!["1", "2", "3", "4", "5"].includes(option)) {
     resetInactividad(ctx, gotoFlow, 300000); // ⬅️⬅️⬅️  REINICIAMOS LA CUENTA ATRÁS
     await flowDynamic("⚠️ Opción no encontrada, por favor seleccione una opción válida.");
 
@@ -84,13 +85,19 @@ switch (option)
     case '3': reclamo = 'Arreglos'                //➡️ Variable del STATUS
     STATUS[telefono] = { ...STATUS[telefono], reclamo, telefono: ctx.from };
     break;
+    case '4': reclamo = 'Luminarias'                //➡️ Variable del STATUS
+    STATUS[telefono] = { ...STATUS[telefono], reclamo, telefono: ctx.from };
+    break;
+    case '5': reclamo = 'Animales'                //➡️ Variable del STATUS
+    STATUS[telefono] = { ...STATUS[telefono], reclamo, telefono: ctx.from };
+    break;
 }                     
 console.log(STATUS[telefono])
                                                            // Ejemplo // NOMBRE VARIABLE = TATUS[telefono], NOMBRE VARIABLE : ctx.body
 
 })
 .addAnswer(
-'¿Podes decirme donde está ubicado? Escribí en un mensaje el nombre de la calle y la dirección (Ejemplo: Avenida Italia 345)',
+'¿Podes decirme donde está ubicado? Escribí en un mensaje el nombre de la calle y la dirección (Ejemplo: Av. H. Yrigoyen 04)',
 {capture:true},
 async (ctx,{gotoFlow, flowDynamic}) =>{
 resetInactividad(ctx, gotoFlow, 300000); // ⬅️⬅️⬅️  REINICIAMOS LA CUENTA ATRÁS
@@ -105,9 +112,10 @@ async (ctx,{flowDynamic, gotoFlow, provider}) =>{
 const telefono = ctx.from
 STATUS[telefono] = {...STATUS[telefono], barrio : ctx.body}})
 .addAnswer(
-    'Por ultimo, ¿Podés darme más detalles sobre tu reclamo? Recordá escribir un mensaje breve y enviar solo texto, no puedo leer imágenes, video o audios.',
+    'Por último, ¿podés darme más detalles sobre tu reclamo? Recordá escribir un mensaje breve y enviar solo texto. Por ahora, no puedo leer imagenes, video o audios 🙌',
     {capture:true},
     async (ctx,{flowDynamic, gotoFlow, provider}) =>{
+
     const telefono = ctx.from
     STATUS[telefono] = {...STATUS[telefono], detalle : ctx.body}
 //Variable del STATUS

@@ -26,19 +26,20 @@ try {
     const telefono = ctx.from
     console.log(telefono)
     const consultados = await consultarDatos(telefono)
+
+    
+    if (consultados === undefined) {
+        await flowDynamic(`No encontré solicitudes registradas con tu número de teléfono.`, { delay: 2000 });
+        return gotoFlow(flowLlamarMenu);
+    }
     const Fecha = consultados['Fecha'] // Fecha y hora en una sola columna
     const Reclamo = consultados['Reclamo']                        // AQUI DECLARAMOS LAS VARIABLES CON LOS DATOS QUE NOS TRAEMOS DE LA FUNCION         VVVVVVVVV
     const Ubicacion = consultados['Ubicacion']
     const Barrio = consultados['Barrio']
     const Telefono = consultados['Telefono']
     const Estado = consultados['Estado']
-    
-    if (Telefono === undefined)
-    {
-        await flowDynamic(`No encontré solicitudes registradas con tu numero de teléfono.`, {delay:2000})
-        return gotoFlow(flowLlamarMenu)  
-    }
-    else await flowDynamic(`RECLAMO REALIZADO EL  ${Fecha}\n\n *Reclamo*: ${Reclamo}\n- *Ubicación*: ${Ubicacion}\n- *Barrio*: ${Barrio}\n- *Estado del reclamo*: ${Estado}`)
+
+    await flowDynamic(`RECLAMO REALIZADO EL  ${Fecha}\n\n *Reclamo*: ${Reclamo}\n- *Ubicación*: ${Ubicacion}\n- *Barrio*: ${Barrio}\n- *Estado del reclamo*: ${Estado}`)
     if (Estado == 'PENDIENTE')
             {
                 await flowDynamic(`El estado de tu solicitud es *PENDIENTE*. Hemos cargado tu reclamo en nuestra base de datos y está pendiente a aprobación. Recordá que completar tu solicitud puede llevar un tiempo.`), {delay:2000}   
