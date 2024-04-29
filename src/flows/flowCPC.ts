@@ -43,6 +43,7 @@ export const flowCPC = addKeyword<Provider, Database>(['cpc',])
 
 })
 .addAction({delay:3000}, async (ctx, {endFlow}) => {
+    stopInactividad(ctx)
     return endFlow('Escribí *Salud* para volver al menú anterior o *Menú* si querés volver al menú principal.');
 })
 

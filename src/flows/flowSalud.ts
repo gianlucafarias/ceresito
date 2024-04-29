@@ -1,7 +1,7 @@
 import { addKeyword } from '@builderbot/bot'
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
-import { resetInactividad, stopInactividad } from '~/utils/idle';
+import {startInactividad, resetInactividad, stopInactividad } from '~/utils/idle';
 import { flowAyuda } from './flowAyuda';
 import { flowCIC } from './flowCic';
 import { flowGenero } from './flowGenero';
@@ -13,6 +13,18 @@ import { flowCaps } from './flowCaps';
 let errores = 0;
 
 export const flowSalud = addKeyword<Provider, Database>('salud')
+.addAction(async (ctx, { gotoFlow }) => {
+    {/*
+    database.contadorFlujos(4) // Cic
+    .then(() => {
+        console.log('Contador del flujo incrementado correctamente');
+    })
+    .catch((error) => {
+        console.error('Error al incrementar el contador del flujo:', error);
+    });
+*/}
+    startInactividad(ctx, gotoFlow, 160000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+}) 
 .addAnswer('¡Trabajamos para descentralizar la salud y llevarla a distintos puntos de la ciudad! 🧑‍⚕️\n\nBrindamos servicios de salud en tres espacios, elegí sobre el que querés saber:',
 {delay: 2000, buttons: [
     {body: 'CIC'},

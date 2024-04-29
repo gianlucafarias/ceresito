@@ -28,6 +28,7 @@ export const flowCaps = addKeyword<Provider, Database>(['caps',])
 
 })
 .addAction({delay:6000}, async (ctx, {endFlow}) => {
+    stopInactividad(ctx)
     return endFlow('Escribí *Salud* para volver al menú anterior o *Menú* si querés volver al menú principal.');
 })
 
