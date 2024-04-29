@@ -5,7 +5,7 @@ import  flowMenu  from './flowMenu'
 import { join } from 'path'
 import { iniciarContadorConversacion } from '../database/contadorConversacion'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
-export const flowPrincipal = addKeyword<Provider>(["hola","buenas tardes", "buenos dias", EVENTS.WELCOME])
+export const flowPrincipal = addKeyword<Provider>(["hola","buenas tardes", "buenos dias"])
 .addAction(
     { delay: 3000 },
     async (ctx, { provider, flowDynamic, gotoFlow }) => {
