@@ -20,7 +20,7 @@ export const flowLlamarMenu = addKeyword<Provider, Database>(['$menu'])
     detenerContadorConversacion(ctx);
 })
 .addAnswer('Querés hacer otra consulta? También podes escribir *Trámites*, *CIC*, *Género* o *Licencias* para otras opciones.',
-{delay: 6000, buttons:
+{delay: 8000, buttons:
 [
     { body: 'No, Gracias' },
     { body: 'Volver al menú' }
