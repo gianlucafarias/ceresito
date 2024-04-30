@@ -9,8 +9,9 @@ export const flowSeccionesPatio = addKeyword<Provider, Database>('Secciones pati
             'Sección 3 ➡️ 3ra semana del mes',
             'Sección 4 ➡️ 4ta semana del mes'])
 .addAction(async (ctx, { provider }) => {
-    const id = ctx.key.remoteJid;
-    return provider.sendImage(id, './media/secciones.png', 'Acá podes ver cuál es tu sección 🗺️');
+    const id = ctx.from;
+    return provider.sendImage(id, 'src/media/secciones.png', 'Acá podes ver cuál es tu sección 🗺️');
+
 })
 .addAnswer(['*📢 Información importante*',
             'Sacá los residuos la semana previa a que inicie la recolección en tu sección. Si los sacas cuando ya estamos recolectando en tu sección, es probable que hayamos pasado y los podamos buscar recién dentro de tres semanas 🚮'])
