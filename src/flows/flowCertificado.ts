@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const RESPONSES_SHEET_ID = process.env.RESPONSES_SHEET_ID
 const CREDENTIALS = JSON.parse(fs.readFileSync('./credenciales.json', 'utf-8'));
-const API_URL = 'https://api.ceres.gob.ar/api/crear-certificado'; // URL de tu API para crear certificados
+const API_URL = 'https://api.ceres.gob.ar/api/api/crear-certificado'; // URL de tu API para crear certificados
 let CertificadoUrl;
 const serviceAccountAuth = new JWT({
     email: CREDENTIALS.client_email,

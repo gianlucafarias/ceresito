@@ -12,7 +12,7 @@ import * as dotenv from 'dotenv';
 import { flowAyuda } from '../flowAyuda';
 import { flowLlamarMenu } from '../flowLlamarMenu';
 import { flowConsultar } from '../reclamo/flowConsultar';
-
+import { geocodeAddress } from '~/utils/geocodeAdress';
 interface Credentials {
     host: string;
     user: string;
@@ -104,6 +104,16 @@ resetInactividad(ctx, gotoFlow, 300000); // ⬅️⬅️⬅️  REINICIAMOS LA C
 const telefono = ctx.from
 STATUS[telefono] = {...STATUS[telefono], ubicacion : ctx.body}
 STATUS[telefono] = {...STATUS[telefono], nombre : ctx.pushName}
+
+ // Obtener la latitud y longitud
+ try {
+    const { latitud, longitud } = await geocodeAddress(ctx.body);
+    STATUS[telefono] = { ...STATUS[telefono], latitud, longitud };
+} catch (error) {
+    console.error('Error al obtener la latitud y longitud:', error);
+    await flowDynamic('No se pudo obtener la latitud y longitud. Por favor, intenta nuevamente.');
+    return;
+}
 })
 .addAnswer(
 '¿Podes especificarme en que barrio se encuentra? Escribí en un mensaje el nombre del barrio (Ejemplo: Barrio Belgrano)',
@@ -137,6 +147,8 @@ try {
         telefono: telefono, // Puedes obtener el teléfono del contexto
         estado: 'PENDIENTE',
         detalle: STATUS[telefono].detalle,
+        latitud: STATUS[telefono].latitud, // Agregar la latitud
+        longitud: STATUS[telefono].longitud, // Agregar la longitud
     });
     console.log('Datos de reclamo ingresados correctamente en la base de datos');
 } catch (error) {
@@ -159,6 +171,8 @@ try {
     Telefono: STATUS[telefono].telefono,
     Estado: 'PENDIENTE',
     Detalle: STATUS[telefono].detalle,
+    Latitud: STATUS[telefono].latitud,
+    Longitud: STATUS[telefono].longitud
     }];
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];

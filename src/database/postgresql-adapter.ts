@@ -174,13 +174,13 @@ contadorFlujos = async (idFlujo) => {
 }
 
 async ingresarDatos(reclamoData) {
-    const { fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle } = reclamoData;
+    const { fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle, latitud, longitud } = reclamoData;
 
     const insertQuery = `
-        INSERT INTO reclamos (fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle)
+        INSERT INTO reclamos (fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle, latitud, longitud)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
-    const values = [fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle];
+    const values = [fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle, latitud, longitud];
 
     try {
         await this.db.query(insertQuery, values);
