@@ -28,7 +28,7 @@ const STATUS = {}
 let tieneImagen = false;
 let telefono;
 
-export const flowInscripcionPoda = addKeyword<Provider, Database>('inscripcion plan de poda')
+export const flowInscripcionPoda = addKeyword<Provider, Database>('Quiero inscribirme al Plan de Poda 2024')
 .addAnswer(['¡Perfecto! Para inscribirte en el Registro de poda 2024 voy a pedirte lo siguiente:👇\n',
             'Nombre y apellido',
             'Dirección ',
