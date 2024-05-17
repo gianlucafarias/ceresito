@@ -108,7 +108,7 @@ export const flowInscripcionPoda = addKeyword<Provider, Database>('inscripcion p
                     const localPath = await provider.saveFile(ctx, {path:'src/media/poda'})
 
                     console.log(localPath)
-                    const imagePath = localPath.substring(localPath.indexOf('/poda/'));
+                    const imagePath = localPath.substring(localPath.indexOf('/media/'));
                     const imageUrl = `https://api.ceres.gob.ar/api${imagePath}`;
                     console.log(imagePath)
                     console.log(imageUrl)
