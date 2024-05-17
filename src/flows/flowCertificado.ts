@@ -20,14 +20,14 @@ const serviceAccountAuth = new JWT({
 const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
 
 export const flowCertificado = addKeyword<Provider, Database>(['generar certificado'])
-.addAnswer('Enviame tu numero de documento. Si estás inscripta al Congreso te generaré un certificado.')
+.addAnswer('Enviame tu numero de documento *sin puntos*. Si asististe al Congreso te generaré un certificado.')
 .addAction({capture: true, delay: 2000}, async (ctx, { flowDynamic, provider }) => {
     const dni = ctx.body;
     CertificadoUrl = await consultarDatos(dni)
     console.log(CertificadoUrl)
 
     if (CertificadoUrl === null) {
-        provider.sendText(ctx.from, 'Lo siento, tu DNI no se encuentra inscripto en el Congreso.');
+        provider.sendText(ctx.from, 'Lo siento, tu DNI no se encuentra inscripto en el Congreso. Si crees que se trata de un error, por favor envia un correo a prensa@ceres.gob.ar');
       } else {
         provider.sendMedia(ctx.from, 'Te envío tu certificado', CertificadoUrl);
       }

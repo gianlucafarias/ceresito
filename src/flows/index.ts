@@ -32,5 +32,6 @@ import { flowSalud } from './flowSalud';
 import { flowCPC } from './flowCPC';
 import { flowCaps } from './flowCaps';
 import { flowCongresoMujeres } from './flowCongresoMujeres';
-
-export const flow =  createFlow([flowCongresoMujeres, flowSalud, flowCaps, flowCPC, flowCertificado, flowCargarReclamo, flowReclamos, flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])
+import { flowPoda } from './flowPoda';
+import { flowInscripcionPoda } from './flowInscripcionPoda';
+export const flow =  createFlow([flowPoda, flowInscripcionPoda, flowCongresoMujeres, flowSalud, flowCaps, flowCPC, flowCertificado, flowCargarReclamo, flowReclamos, flowPrincipal, voiceNoteFlow, mediaFlow, flowMenu, flowLlamarMenu, flowAyuda, flowLicencias, flowTramites, flowCIC, flowAdultosmayores, flowCeresito, flowDengue, flowEducacion, flowHistoria, flowResiduos, flowTurismo, flowActividadesAdultos, flowAgente, flowConsejoAdultos, flowMujerSegura, flowNumeroGuardialocal, flowSeccionesPatio, flowInactividad, flowGenero, flowPrimeraVez, flowConsultar, flowCrearReclamo])

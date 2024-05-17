@@ -101,6 +101,5 @@ export const flowLlamarMenu = addKeyword<Provider, Database>(['$menu'])
         stopInactividad(ctx)
         return endFlow(`De nada ${nombre} 😃. Si necesitas información estoy disponible 24/7.`)
     }
-    default: await flowDynamic('No te entiendo 😢 Necesitas ayuda? Escribí la palabra *Menú* para volver a empezar')
     }
 });
