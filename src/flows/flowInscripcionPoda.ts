@@ -106,8 +106,13 @@ export const flowInscripcionPoda = addKeyword<Provider, Database>('inscripcion p
                 if(tieneImagen === true){
                     telefono = ctx.from
                     const localPath = await provider.saveFile(ctx, {path:'src/media/poda'})
+
                     console.log(localPath)
-                    STATUS[telefono] = {...STATUS[telefono], imagen : `https://api.ceres.gob.ar/${localPath}`}
+                    const imagePath = localPath.substring(localPath.indexOf('/poda/'));
+                    const imageUrl = `https://api.ceres.gob.ar/api${imagePath}`;
+                    console.log(imagePath)
+                    console.log(imageUrl)
+                    STATUS[telefono] = {...STATUS[telefono], imagen : imageUrl}
                 }
                 ingresarDatos();  
                 await flowDynamic(`*Nombre*: ${STATUS[telefono].nombre}\n- *Ubicación*: ${STATUS[telefono].ubicacion}\n- *Barrio*: ${STATUS[telefono].barrio}\n`)

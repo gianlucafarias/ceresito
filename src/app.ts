@@ -4,6 +4,8 @@ import { flow } from './flows'
 import { MemoryDB } from '@builderbot/bot'
 import polka from 'polka';
 import {startServer} from './services/api/server'
+import path from 'path';
+import serveStatic from 'serve-static';
 
 const body = {
     "messaging_product": "whatsapp",
@@ -30,6 +32,7 @@ const main = async () => {
             concurrencyLimit: 60 //👌
         }
     })
+
 
     provider.server.post(
         '/v1/messages',
