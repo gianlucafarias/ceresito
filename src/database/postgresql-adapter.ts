@@ -178,7 +178,7 @@ async ingresarDatos(reclamoData) {
 
     const insertQuery = `
         INSERT INTO reclamos (fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle, latitud, longitud)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `;
     const values = [fecha, nombre, reclamo, ubicacion, barrio, telefono, estado, detalle, latitud, longitud];
 
