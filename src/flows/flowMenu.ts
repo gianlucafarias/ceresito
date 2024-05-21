@@ -16,6 +16,8 @@ import { flowCeresito } from './flowCeresito';
 import { flowReclamos } from './reclamo/flowReclamos';
 import { flowSalud } from './flowSalud';
 import { flowCongresoMujeres } from './flowCongresoMujeres';
+import { flowInscripcionPoda } from './flowInscripcionPoda';
+import { flowCertificado } from './flowCertificado';
 
 let errores = 0;
 const  flowMenu = addKeyword(["menu", "menú"])
@@ -69,12 +71,14 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
                         },
                         {
                             "id": "009",
-                            "title": "Dengue 🦟",
+                            "title": "Certificado",
+                            "description": "Solicitá tu certificado si asististe al 3° Congreso Regional de Mujeres."
+
                         },
                         {
                             "id": "010",
-                            "title": "Eventos",
-                            "description": "Congreso Regional de mujeres líderes"
+                            "title": "Plan de Poda 2024",
+                            "description": "Solicitá la poda de un arbol"
                         },
                     ]
                 }
@@ -87,7 +91,7 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
     const opcion = ctx.body.toLowerCase().trim()
     const nombre = ctx.name;
     console.log(opcion)
-    if (!["salud", "tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "volver al menú", "Volver al menú", '001', '002', '003', '004', '005', '006', '007', '008', '009', '010'].includes(opcion)) {
+    if (!["poda", "salud", "tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "volver al menú", "Volver al menú", '001', '002', '003', '004', '005', '006', '007', '008', '009', '010'].includes(opcion)) {
         errores++;
         resetInactividad(ctx, gotoFlow, 90000)
             if (errores > 2 )
@@ -132,11 +136,11 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
         }
         case '009': {
             stopInactividad(ctx)
-            return gotoFlow(flowDengue)
+            return gotoFlow(flowCertificado)
         }
         case '010': {
             stopInactividad(ctx)
-            return gotoFlow(flowCongresoMujeres)
+            return gotoFlow(flowInscripcionPoda)
         }
         case 'no, gracias': {
             stopInactividad(ctx)

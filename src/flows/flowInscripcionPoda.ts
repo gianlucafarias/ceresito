@@ -29,6 +29,9 @@ let tieneImagen = false;
 let telefono;
 
 export const flowInscripcionPoda = addKeyword<Provider, Database>('Quiero inscribirme al Plan de Poda 2024')
+.addAction(async (ctx, { gotoFlow }) => {
+    startInactividad(ctx, gotoFlow, 1600000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+})  
 .addAnswer(['¡Perfecto! Para inscribirte en el Registro de poda 2024 voy a pedirte lo siguiente:👇\n',
             'Nombre y apellido',
             'Dirección ',
@@ -86,6 +89,7 @@ export const flowInscripcionPoda = addKeyword<Provider, Database>('Quiero inscri
                         switch (opcion) {
                             case 'si': 
                                         {
+                                            resetInactividad(ctx, gotoFlow, 900000)
                                         await flowDynamic('Perfecto, espero tu imagen. Te doy un tiempo si tenes que ir a sacarla.')
                                         tieneImagen = true;
                                         break;

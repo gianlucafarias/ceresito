@@ -5,6 +5,9 @@ import { addKeyword } from '@builderbot/bot'
 import { PostgreSQLAdapter as Database } from '@builderbot/database-postgres'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
 import axios from 'axios';
+import { flowLlamarMenu } from './flowLlamarMenu';
+import { startInactividad, resetInactividad, stopInactividad,
+} from '../utils/idle'
 
 const RESPONSES_SHEET_ID = process.env.RESPONSES_SHEET_ID
 const CREDENTIALS = JSON.parse(fs.readFileSync('./credenciales.json', 'utf-8'));
@@ -18,19 +21,25 @@ const serviceAccountAuth = new JWT({
     ],
 });
 const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
+let errores = 0;
 
 export const flowCertificado = addKeyword<Provider, Database>(['generar certificado'])
+.addAction(async (ctx, { gotoFlow }) => {
+  startInactividad(ctx, gotoFlow, 1600000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+})  
+
 .addAnswer('Enviame tu numero de documento *sin puntos*. Si asististe al Congreso te generaré un certificado.')
-.addAction({capture: true, delay: 2000}, async (ctx, { flowDynamic, provider }) => {
+.addAction({capture: true, delay: 2000}, async (ctx, { gotoFlow, flowDynamic, provider }) => {
     const dni = ctx.body;
     CertificadoUrl = await consultarDatos(dni)
     console.log(CertificadoUrl)
-
+    stopInactividad(ctx)
     if (CertificadoUrl === null) {
         provider.sendText(ctx.from, 'Lo siento, tu DNI no se encuentra inscripto en el Congreso. Si crees que se trata de un error, por favor envia un correo a prensa@ceres.gob.ar');
       } else {
         provider.sendMedia(ctx.from, 'Te envío tu certificado', CertificadoUrl);
       }
+      return gotoFlow(flowLlamarMenu)
     });
 
 async function consultarDatos(dni) {

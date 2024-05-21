@@ -9,7 +9,10 @@ import flowMenu from './flowMenu'
 let errores = 0;
 
 export const flowPoda = addKeyword<Provider, Database>('poda')
-.addAnswer('¡Llegó el otoño y con él la época de poda! 🌳 \nDesde el Gobierno de la ciudad queremos brindarte información importante al respecto: \n- Según la Ley Provincial N° 13836 y la Ordenanza Municipal N° 1726/2021 el responsable de realizar la poda de arbolado público es el Municipio 💪\n\n - Para cuidar el árbol, el momento ideal para realizar la poda es en el receso invernal. Es el momento en que los árboles de hojas caducas las pierden todas 🍂')
+.addAction(async (ctx, { gotoFlow }) => {
+    startInactividad(ctx, gotoFlow, 1600000); // ⬅️⬅️⬅️  INICIAMOS LA CUENTA ATRÁS PARA ESTE USUARIO
+})   
+.addAnswer('¡Llegó el otoño y con él la época de poda! 🌳 \nDesde el Gobierno de la ciudad queremos brindarte información importante al respecto: \n- Según la Ley Provincial N° 13836 y la Ordenanza Municipal N° 1726/2021 el responsable de realizar la poda de arbolado público es el Municipio 💪\n\n- Para cuidar el árbol, el momento ideal para realizar la poda es en el receso invernal. Es el momento en que los árboles de hojas caducas las pierden todas 🍂')
 
 .addAnswer('¿Necesitas podar algún árbol del frente de tu casa? 👇',
 {delay: 5000, buttons:
@@ -19,9 +22,10 @@ export const flowPoda = addKeyword<Provider, Database>('poda')
 ]
 })
 .addAction({ capture: true }, async (ctx, { endFlow, flowDynamic, gotoFlow, fallBack }) => {
-    const opcion = ctx.body;
+    const opcion = ctx.body.toLowerCase().trim();
     console.log(opcion)
-    if (!["tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "Volver al menu", "volver al menú", "si", "Si"].includes(opcion)) {
+    if (!["si", "tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "Volver al menu", "volver al menú"].includes(opcion))
+        {
         errores++;
         resetInactividad(ctx, gotoFlow, 90000)
             if (errores > 2 )
@@ -31,13 +35,24 @@ export const flowPoda = addKeyword<Provider, Database>('poda')
             }
             await flowDynamic('⚠️ Opción no encontrada, por favor seleccione una opción válida.');
             return gotoFlow(flowPoda);        
-    }
+        }
     switch (opcion) {
-        case 'Si': 
+        case 'si': 
+       {
         stopInactividad(ctx)
         return gotoFlow(flowInscripcionPoda);
-        case 'Volver al menú': 
-        stopInactividad(ctx)
-        return gotoFlow(flowMenu);
+    }
+        case 'volver al menú': {
+            stopInactividad(ctx)
+            return gotoFlow(flowMenu)
+        }
+        case 'Volver al menú': {
+            stopInactividad(ctx)
+            return gotoFlow(flowMenu)
+        }
+        case 'Volver al menu': {
+            stopInactividad(ctx)
+            return gotoFlow(flowMenu)
+        }
     }
 })
