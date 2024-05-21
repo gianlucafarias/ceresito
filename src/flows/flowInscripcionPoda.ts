@@ -36,7 +36,7 @@ export const flowInscripcionPoda = addKeyword<Provider, Database>('Quiero inscri
             'Nombre y apellido',
             'Dirección ',
             'Barrio',
-            'Una foto (opcional)'])
+            'Una foto del arbol que necesita poda (opcional)'])
 
             .addAnswer(
                 '¿Podes decirme tu Nombre completo?',
