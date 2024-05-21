@@ -21,7 +21,6 @@ const serviceAccountAuth = new JWT({
     ],
 });
 const doc = new GoogleSpreadsheet(RESPONSES_SHEET_ID, serviceAccountAuth);
-let errores = 0;
 
 export const flowCertificado = addKeyword<Provider, Database>(['generar certificado'])
 .addAction(async (ctx, { gotoFlow }) => {
