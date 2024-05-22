@@ -8,7 +8,7 @@ import { startInactividad, resetInactividad, stopInactividad,
 } from '../utils/idle'
 import { flowAyuda } from './flowAyuda';
 import { flowLlamarMenu } from './flowLlamarMenu';
-
+import flowMenu from './flowMenu';
 
 const RESPONSES_SHEET_ID = process.env.RESPONSES_SHEET_ID
 const CREDENTIALS = JSON.parse(fs.readFileSync('./credenciales.json', 'utf-8'));
@@ -36,10 +36,44 @@ export const flowInscripcionPoda = addKeyword<Provider, Database>('Quiero inscri
             'Nombre y apellido',
             'Dirección ',
             'Barrio',
-            'Una foto del arbol que necesita poda (opcional)'])
+            'Una foto del arbol que necesita poda (opcional)',
+            '*¿Comenzamos la inscripción?*'],
+            {
+                buttons: [
+                    {body: 'Si'},
+                    {body: 'Volver al menú'}
+                ]
+              })
+              .addAction({capture:true}, async (ctx, { flowDynamic, gotoFlow }) => {
+                const option = ctx.body.toLowerCase().trim();
+                console.log(option)
+                if (!["si", "volver al menú"].includes(option)) {
+                    errores++;
+                    resetInactividad(ctx, gotoFlow, 1600000)
+                    if (errores > 2 )
+                    {
+                        stopInactividad(ctx)
+                        return gotoFlow(flowAyuda);
+                    }
+                    await flowDynamic('⚠️ Opción no encontrada, por favor seleccione una opción válida.');
+                    return gotoFlow(flowInscripcionPoda);
+                }
+                switch (option) {
+                    case 'si': {
+                        stopInactividad(ctx)
+                       break;
+                    }
+                    case 'volver al menú': {
+                        stopInactividad(ctx)
+                        return gotoFlow(flowMenu)
+                        break;
+                    }
+                }
+              }
+            )
 
             .addAnswer(
-                '¿Podes decirme tu Nombre completo?',
+                '¿Podes decirme tu nombre completo?',
                 {capture:true},
                 async (ctx,{gotoFlow, flowDynamic}) =>{
                 resetInactividad(ctx, gotoFlow, 300000); // ⬅️⬅️⬅️  REINICIAMOS LA CUENTA ATRÁS

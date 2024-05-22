@@ -18,6 +18,7 @@ import { flowSalud } from './flowSalud';
 import { flowCongresoMujeres } from './flowCongresoMujeres';
 import { flowInscripcionPoda } from './flowInscripcionPoda';
 import { flowCertificado } from './flowCertificado';
+import { flowPoda } from './flowPoda';
 
 let errores = 0;
 const  flowMenu = addKeyword(["menu", "menú"])
@@ -140,7 +141,7 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
         }
         case '010': {
             stopInactividad(ctx)
-            return gotoFlow(flowInscripcionPoda)
+            return gotoFlow(flowPoda)
         }
         case 'no, gracias': {
             stopInactividad(ctx)

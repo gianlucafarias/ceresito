@@ -40,7 +40,7 @@ const calendario: Record<string, Record<string, string>> = {
     }
 };
 
-export const flowSeccionesPatio2 = addKeyword<Provider, Database>('12')
+export const flowSeccionesPatio2 = addKeyword<Provider, Database>('secciones patio 2')
 .addAnswer('Por favor, indícame en qué sección vives (1, 2, 3, 4):')
 
 .addAction({ capture: true }, async (ctx, { flowDynamic, gotoFlow }) => {

@@ -12,6 +12,7 @@
   },
   "keywords": [],
   "dependencies": {
+    "@builderbot-plugins/gemini-layer": "0.0.4-alpha.0",
     "@builderbot/bot": "1.1.4-alpha.0",
     "@builderbot/database-postgres": "latest",
     "@builderbot/provider-meta": "latest",
