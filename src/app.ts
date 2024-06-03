@@ -46,8 +46,8 @@ const main = async () => {
     provider.server.post(
         '/v1/template',
         handleCtx(async (bot, req, res) => {
-            const { number, template, languageCode } = req.body
-            await bot.provider.sendTemplate(number, template, languageCode)
+            const { number, template, languageCode, components } = req.body
+            await bot.provider.sendTemplate(number, template, languageCode, components)
             return res.end('sended')
         })
     )
