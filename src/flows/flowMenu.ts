@@ -19,6 +19,7 @@ import { flowCongresoMujeres } from './flowCongresoMujeres';
 import { flowInscripcionPoda } from './flowInscripcionPoda';
 import { flowCertificado } from './flowCertificado';
 import { flowPoda } from './flowPoda';
+import { flowColectividades } from './flowColectividades';
 
 let errores = 0;
 const  flowMenu = addKeyword(["menu", "menú"])
@@ -72,8 +73,8 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
                         },
                         {
                             "id": "009",
-                            "title": "Certificado",
-                            "description": "Solicitá tu certificado si asististe al 3° Congreso Regional de Mujeres."
+                            "title": "Colectividades 2024",
+                            "description": "Información sobre la 3ra Fiesta de las Colectividades en Ceres"
 
                         },
                         {
@@ -92,7 +93,7 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
     const opcion = ctx.body.toLowerCase().trim()
     const nombre = ctx.name;
     console.log(opcion)
-    if (!["poda", "salud", "tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "volver al menú", "Volver al menú", '001', '002', '003', '004', '005', '006', '007', '008', '009', '010'].includes(opcion)) {
+    if (!["colectividades", "fiesta de las colectividades", "poda", "salud", "tramites", "trámites", "cic", "género", "genero", "licencia", "licencias", "menu", "menú", "hola", "gracias", "no, gracias", "volver al menú", "Volver al menú", '001', '002', '003', '004', '005', '006', '007', '008', '009', '010'].includes(opcion)) {
         errores++;
         resetInactividad(ctx, gotoFlow, 90000)
             if (errores > 2 )
@@ -137,7 +138,7 @@ await flowDynamic('No soy un superhéroe pero puedo ayudarte de muchas maneras �
         }
         case '009': {
             stopInactividad(ctx)
-            return gotoFlow(flowCertificado)
+            return gotoFlow(flowColectividades)
         }
         case '010': {
             stopInactividad(ctx)
@@ -197,7 +198,7 @@ const flowMasOpciones = addKeyword(["$mas_opciones"])
                         },
                         {
                             "id": "009",
-                            "title": "Dengue 🦟",
+                            "title": "Fiesta de las Colectividades",
                         },
                         {
                             "id": "010",

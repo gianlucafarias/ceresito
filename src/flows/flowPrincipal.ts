@@ -5,14 +5,23 @@ import  flowMenu  from './flowMenu'
 import { join } from 'path'
 import { iniciarContadorConversacion } from '../database/contadorConversacion'
 import { MetaProvider as Provider } from '@builderbot/provider-meta'
+
+
+const sticker = 'src/media/colectividades.png'
+
+
 export const flowPrincipal = addKeyword<Provider>(["hola","buenas tardes", "buenos dias"])
+
+
 .addAction(
     { delay: 3000 },
     async (ctx, { provider, flowDynamic, gotoFlow }) => {
+      
       iniciarContadorConversacion(ctx);
       const name = ctx.name;
       const telefono = ctx.from;
-      await flowDynamic(`🙌 ¡Hola ${name}! Soy Ceresito y volví 😎`);
+      await flowDynamic(`🙌 ¡Hola ${name}! Soy Ceresito, el chatbot del Gobierno de la Ciudad de Ceres. 😎`);
+    
       const existeContacto = await consultarContactos(name, telefono);
     
       if (existeContacto) {
@@ -25,15 +34,3 @@ export const flowPrincipal = addKeyword<Provider>(["hola","buenas tardes", "buen
     }
     
 )
-
-
-const body = 
-    {
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": "{{Recipient-Phone-Number}}",
-        "type": "sticker",
-        "sticker": {
-            "id": "./media/ceresito.webp"
-        }
-    }
